@@ -1,0 +1,54 @@
+---
+title: "Lab 3"
+module: Statistical Programming and Applications
+module code: MATH9902
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+course: PG Certificate in Applied Statistics
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+
+```{r}
+cond_prob <- function(d1=1,s=2){
+  
+  if(d1>6 | d1<1) stop('Invalid value for dice!' )
+  if(s>12 | s<2) stop('Invalid value for sum of the two independent dice!' )
+  
+  die <- 1:6
+  # sample space of two dice
+  rolls <- expand.grid(die, die)
+  
+  R <- data.frame(rolls, rowSums(rolls))
+  colnames(R) <- c("D_1", "D_2", "S")
+  
+  # calculate the probability that the sum of two dice is Pr(D1=d1 | S=s)
+  list(
+    sample_space = R[(R$S == s), ],
+    prob = sum(R$D_1 == d1 & R$S == s) / sum(R$S == s)   
+  )
+  
+}
+
+```
+
+**Pr(D1=d1 | S=s)**.
+
+Output: calculate the conditional probability written above
+```{r error=0}
+#CD <- cond_prob(0,2)
+```
+```{r error=0}
+#CD <- cond_prob(2,1)
+```
+```{r}
+CD <- cond_prob(5,6)
+CD
+```
+
+

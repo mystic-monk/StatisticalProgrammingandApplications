@@ -1,0 +1,65 @@
+---
+title: "Lab 2"
+module: Statistical Programming and Applications
+module code: MATH9902
+output:
+  html_document:
+    df_print: paged
+course: PG Certificate in Applied Statistics
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+Urn_draws <- function(urn_size=100, ndraws = 1) {
+  
+  if (ndraws > urn_size) stop(paste('ndraws cannot be >', as.character(urn_size), '!') )
+  
+  balls <- sample(1:urn_size, size = ndraws, replace = FALSE)
+  print("Printing using For loop")
+  for (i in 1:ndraws) {
+    if (balls[i] < 10){
+      print(balls[i])
+    }
+  } 
+  # another way of printing
+  print("Printing from dataframe by masking")
+  print(balls[balls<10])
+  
+  balls <- sort(balls)
+  
+  mean <- mean(balls)
+  
+  min <- min(balls)
+  
+  max <- max(balls)
+  
+  even_prop <- sum((balls %% 2) == 0) / ndraws
+  
+  list(balls = balls,
+       mean = mean,
+       min = min,
+       max = max,
+       even_prop = even_prop)
+}
+```
+```{r}
+set.seed(7)
+UD <- Urn_draws(19)
+UD
+```
+
+
+```{r}
+set.seed(8)
+UD <- Urn_draws(19, 3)
+```
+
+
+```{r}
+set.seed(8)
+#UD <- Urn_draws(19, 21)
+```
+
