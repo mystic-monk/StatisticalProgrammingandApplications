@@ -1,0 +1,50 @@
+---
+title: "Lab 4"
+module: Statistical Programming and Applications
+module code: MATH9902
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+course: PG Certificate in Applied Statistics
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+discrete <- function(x, p_x, create_plot=FALSE){
+
+  # cumulative distribution function of X
+  F_x <- cumsum(p_x)
+  
+  if (create_plot == TRUE) {
+    print(x)
+    print(p_x)
+    #ar(mfrow = c(1, 2))
+
+    plot(p_x, lwd = 3, type = 'h', main = 'pmf of X', ylab = 'p(x)', xlab = 'x')
+
+    cdf <- stepfun(x, c(0, F_x))
+    plot.stepfun(cdf, verticals = FALSE, do.points = TRUE, 
+      pch = 16, lwd = 3,
+      main = 'cdf of X',
+      ylab = 'F(x)')
+  }
+  
+  list(
+    E_X <- c(x %*% p_x),
+    Var_X <- c(x - E_X)^2 %*% p_x,
+    F_X <- F_x
+  )
+}
+```
+
+```{r}
+X <- 1:5
+P_X <- rep(0.2, 5)
+df <- discrete(x=X, p_x=P_X, TRUE)
+```
+
+
